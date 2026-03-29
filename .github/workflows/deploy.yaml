@@ -1,21 +1,26 @@
 name: Deploy to GCP
 on:
   push:
-    branches: [ main ] # Runs when you push to the main branch
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4  # Upgraded version
 
       - name: Google Cloud Auth
-        uses: 'google-github-actions/auth@v0'
+        uses: 'google-github-actions/auth@v2'  # Upgraded version
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
       - name: Build and Push to Cloud Run
         run: |
-          gcloud builds submit --tag gcr.io/logistic-model-deploy/my-api
-          gcloud run deploy my-api --image gcr.io/logistic-model-deploy/my-api --platform managed --region us-central1 --allow-unauthenticated
+          gcloud builds submit --tag us-central1-docker.pkg.dev/logistic-model-deploy/my-model-repo/my-api
+          
+          gcloud run deploy my-api \
+            --image us-central1-docker.pkg.dev/logistic-model-deploy/my-model-repo/my-api \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated
