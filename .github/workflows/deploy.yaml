@@ -21,10 +21,7 @@ jobs:
           gcloud builds submit --project=logistic-model-deploy --tag us-central1-docker.pkg.dev/logistic-model-deploy/my-model-repo/my-api .
 
       - name: Deploy to Cloud Run
+        - name: Build and Push to Artifact Registry
         run: |
-          gcloud run deploy my-api \
-            --image us-central1-docker.pkg.dev/logistic-model-deploy/my-model-repo/my-api \
-            --region us-central1 \
-            --platform managed \
-            --allow-unauthenticated \
-            --project=logistic-model-deploy
+          # We are removing the manual project flag and letting the auth-action handle it
+          gcloud builds submit --tag us-central1-docker.pkg.dev/logistic-model-deploy/my-model-repo/my-api .
