@@ -17,5 +17,5 @@ jobs:
 
       - name: Build and Push to Cloud Run
         run: |
-          gcloud builds submit --tag gcr.io/my-project/my-api
-          gcloud run deploy my-api --image gcr.io/my-project/my-api --platform managed --region us-central1 --allow-unauthenticated
+          gcloud builds submit --tag gcr.io/logistic-model-deploy/my-api
+          gcloud run deploy my-api --image gcr.io/logistic-model-deploy/my-api --platform managed --region us-central1 --allow-unauthenticated
